@@ -1,8 +1,15 @@
+using Nimbus_Weather_App.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddMvc();
+
+// Add weather service. 
+builder.Services.AddTransient<WeatherService>();
 
 var app = builder.Build();
 
