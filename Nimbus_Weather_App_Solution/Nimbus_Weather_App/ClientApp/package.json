@@ -1,6 +1,9 @@
 {
   "name": "nimbus_weather_app",
   "version": "0.0.0",
+  "eslintConfig": {
+    "no-empty-function": "off"
+  },
   "scripts": {
     "ng": "ng",
     "prestart": "node aspnetcore-https",

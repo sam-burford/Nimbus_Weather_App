@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nimbus_Weather_App.Interfaces;
 using Nimbus_Weather_App.Services;
 
 namespace Nimbus_Weather_App.Controllers
@@ -9,18 +10,19 @@ namespace Nimbus_Weather_App.Controllers
 	public class WeatherController : ControllerBase
 	{
 
-		private readonly WeatherService _weatherService;
+		private readonly IWeatherService _weatherService;
 
-		public WeatherController(WeatherService service)
+		public WeatherController(IWeatherService service)
 		{
 			_weatherService = service;
 			service.Location = "London";
 		}
 
-        [HttpGet]
-		public async Task<IActionResult> Get()
+        [HttpGet("{location}")] // GET /api/weather/london
+		public async Task<IActionResult> Get(string location)
 		{
-			return Ok(await _weatherService.GetWeatherAsync());
+			_weatherService.Location = Uri.UnescapeDataString(location);
+            return Ok(await _weatherService.GetWeatherAsync());
 		}
 
 	}

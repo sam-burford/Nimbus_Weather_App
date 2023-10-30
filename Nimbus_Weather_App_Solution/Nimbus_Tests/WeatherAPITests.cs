@@ -11,7 +11,7 @@ namespace Nimbus_Tests
 
 		public WeatherAPITests(ITestOutputHelper output)
 		{
-			Weather = new WeatherService(new HttpClient());
+			Weather = new WeatherService();
 
 			// Assign test output. 
 			this.output = output;

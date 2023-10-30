@@ -1,0 +1,28 @@
+<div id="forecast-display">
+  <div *ngIf="!forecastData">
+    Loading weather forecast...
+  </div>
+
+  <div class="mainContainer" *ngIf="forecastData && forecastData.isValid">
+    <div class="containerSection">
+      <h3>Location</h3>
+      <ul>
+        <li>Name: {{ forecastData.location.name }}</li>
+        <li>Region: {{ forecastData.location.region }}</li>
+        <li>Country: {{ forecastData.location.country }}</li>
+      </ul>
+    </div>
+    <div class="containerSection">
+      <h3>Weather</h3>
+      <ul>
+        <li>{{ forecastData.current['temp_c'] }}°C</li>
+        <li>
+          <img src=
+               "{{ forecastData.current.condition.icon }}"
+          />
+        </li>
+        <li>{{ forecastData.current.condition.text }}</li>
+      </ul>
+    </div>
+  </div>
+</div>

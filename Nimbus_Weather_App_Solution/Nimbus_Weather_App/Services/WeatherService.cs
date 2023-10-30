@@ -1,11 +1,12 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
+using Nimbus_Weather_App.Interfaces;
 using Nimbus_Weather_App.Models;
 
 namespace Nimbus_Weather_App.Services
 {
 
-    public class WeatherService
+	public class WeatherService : IWeatherService, IDisposable
     {
 
         /// <summary>
@@ -25,37 +26,21 @@ namespace Nimbus_Weather_App.Services
 
         private WeatherResponse? cachedWeatherResponse;
         private DateTime cachedWeatherReponseTime = DateTime.MinValue;
+		private bool disposedValue;
 
-        public WeatherService(HttpClient http)
+		public WeatherService()
         {
-            Http = http;
+            Http = new HttpClient();
             Location = "London";
         }
 
-        /// <summary>
-        /// The HttpClient used for making calls to an external API. 
-        /// </summary>
-        public HttpClient Http { get; private set; }
-        /// <summary>
-        /// The current location of the weather object. 
-        /// </summary>
-        public string Location { get; set; }
-        /// <summary>
-        /// This is the value of the Weather Reponse most recently cached, 
-        /// or null if it has not yet been cached. 
-        /// </summary>
+        
+		public HttpClient Http { get; }
+		public string Location { get; set; }
         public WeatherResponse? CachedWeatherReponse { get => cachedWeatherResponse; }
-        /// <summary>
-        /// This is the DateTime when the Weather Response was most recently cached, 
-        /// or DateTime.Min if it has not yet been cached. 
-        /// </summary>
         public DateTime CachedWeatherReponseTime { get => cachedWeatherReponseTime; }
 
-        /// <summary>
-        /// Retrieves weather data from an external API and stores it in a WeatherResponse variable. 
-        /// </summary>
-        /// <returns></returns>
-        public async Task<WeatherResponse> GetWeatherAsync()
+		public async Task<WeatherResponse> GetWeatherAsync()
         {
             if (Location is null || string.IsNullOrEmpty(Location))
             {
@@ -97,19 +82,12 @@ namespace Nimbus_Weather_App.Services
         /// <returns>String object in the format: '20 °C' or an empty String if not found. </returns>
         public async Task<string> GetCurrentTemperatureCelcius()
         {
-            if (Location is null)
-            {
-                Console.WriteLine("Location has not been set!");
-                return "";
-            }
+            var weather = await GetWeatherAsync();
 
-            string url = API_URL + $"/current.json?key={API_KEY}&q={GetEncodedLocation()}&aqi=no";
-            string json = await Http.GetStringAsync(url);
-
-            if (TryParseWeatherResponse(json, out var weatherReponse))
+            if (weather.IsValid && weather.Current is not null)
             {
-                return weatherReponse.Current?.TemperatureCelsius.ToString() + " °C";
-            }
+                return weather.Current.TemperatureCelsius.ToString() + " °C";
+			}
 
             return "";
         }
@@ -120,7 +98,7 @@ namespace Nimbus_Weather_App.Services
         /// <param name="jsonResponse">The JSON response. </param>
         /// <param name="weatherResponse">The parsed Weather Response object. </param>
         /// <returns>Whether or not the parsing was successful. </returns>
-        private bool TryParseWeatherResponse(string jsonResponse, out WeatherResponse weatherResponse)
+        private static bool TryParseWeatherResponse(string jsonResponse, out WeatherResponse weatherResponse)
         {
             WeatherResponse? result;
 
@@ -172,6 +150,30 @@ namespace Nimbus_Weather_App.Services
             return location is not null ? UrlEncoder.Default.Encode(location) : "";
         }
 
-    }
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!disposedValue)
+			{
+                // If disposing is true, the method is being called from IDisposable.Dispose() - which means
+                // we are trying to clean up resources intentionally. 
+
+                // However, if this is false, it means the system is cleaning up resources automatically (finaliser). 
+				if (disposing)
+				{
+                    // Dispose managed state (managed objects). 
+                    Http.Dispose();
+				}
+
+				disposedValue = true;
+			}
+		}
+
+		public void Dispose()
+		{
+			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+			Dispose(disposing: true);
+			GC.SuppressFinalize(this);
+		}
+	}
 
 }

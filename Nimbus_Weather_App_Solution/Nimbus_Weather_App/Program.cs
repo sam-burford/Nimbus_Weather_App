@@ -1,3 +1,4 @@
+using Nimbus_Weather_App.Interfaces;
 using Nimbus_Weather_App.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,18 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddMvc();
 
 // Add weather service. 
-builder.Services.AddTransient<WeatherService>();
+builder.Services.AddTransient<IWeatherService, WeatherService>();
+
+// Configure CORS
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(builder =>
+	{
+		builder.AllowAnyOrigin()
+		.AllowAnyMethod()
+		.AllowAnyHeader();
+	});
+});
 
 var app = builder.Build();
 
@@ -23,7 +35,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UseCors();
 
 app.MapControllerRoute(
 	name: "default",

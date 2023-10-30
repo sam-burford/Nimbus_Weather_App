@@ -1,12 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
-
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
+@font-face {
+  font-family: 'Kenao';
+  src: url('./assets/fonts/Kenao.otf');
+  font-weight: normal;
+  font-style: normal;
 }
 
-code {
-  color: #e01a76;
+:root {
+  --bg-main: #1F2232;
+}
+
+body
+{
+    font-family: "Kenao";
+    background-color: var(--bg-main);
+}
+
+a {
+  color: #0366d6;
 }
 
 .btn-primary {

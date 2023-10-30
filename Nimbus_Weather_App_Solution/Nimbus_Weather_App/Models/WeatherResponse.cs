@@ -48,14 +48,33 @@ namespace Nimbus_Weather_App.Models
 		public double TemperatureCelsius { get; set; }
 		[JsonPropertyName("temp_f")]
 		public double TemperatureFahrenheit { get; set; }
+		[JsonPropertyName("is_day")]
 		public int IsDay { get; set; }
-		public double WindMph { get; set; }
-		public double WindKph { get; set; }
-		public int WindDegree { get; set; }
-		public string? WindDir { get; set; }
-		public int Humidity { get; set; }
-		public int Cloud { get; set; }
+        public Condition Condition { get; set; }
+        [JsonPropertyName("wind_mph")]
+        public double WindMph { get; set; }
+        [JsonPropertyName("wind_kph")]
+        public double WindKph { get; set; }
+        [JsonPropertyName("wind_degree")]
+        public int WindDegree { get; set; }
+        [JsonPropertyName("wind_dir")]
+        public string? WindDir { get; set; }
+        public int Humidity { get; set; }
+        public int Cloud { get; set; }
 
 	}
+
+	public struct Condition
+	{
+        public Condition()
+        {
+
+        }
+
+        public string Text { get; set; } = "";
+		public string Icon { get; set; } = "";
+		public int Code { get; set; } = 0;
+
+    }
 
 }

@@ -1,0 +1,59 @@
+#locationSearch
+{
+  position: relative;
+  white-space: nowrap;
+}
+
+input
+{
+  font-family: Arial;
+  border-radius: 25px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 6px 12px;
+  border: 1px solid #c1aa28;
+  width: 400px;
+}
+
+:host:focus-within
+{
+  
+}
+
+input:hover, input:focus-visible
+{
+  outline: 2px solid #c1aa28 !important;
+}
+
+#searchBtn
+{
+  position: relative;
+  display: inline-flex;
+  background-color: rgba(0, 0, 0, 0.3);
+  height: 38px;
+  width: 50px;
+  border-radius: 25px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+  transform: translateY(3px);
+}
+
+#searchBtn:hover
+{
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+#searchBtn > svg
+{
+  fill: rgb(0, 0, 0);
+  margin: auto;
+}
+
+@media only screen and (max-width: 775px)
+{
+  input
+  {
+    width: 65vw;
+  }
+}
