@@ -65,7 +65,11 @@ Throughout the Nimbus project, I learned valuable lessons, including:
 - Real-time weather data retrieval. 
 - User-friendly and responsive design. 
 - Weather information for various locations. 
-- API integration for current weather conditions. 
+- API integration for current weather conditions.
+- Responsive Design (see GIF below)
+
+![nimbus_responsiveness](https://github.com/sam-burford/Nimbus_Weather_App/assets/60924660/4d9b8820-2071-45b3-80c3-46e390b7ea1d)
+
 
 ## Project Structure
 
