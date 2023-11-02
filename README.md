@@ -82,6 +82,7 @@ Throughout the Nimbus project, I learned valuable lessons, including:
 For any questions or inquiries, please feel free to reach out to me: 
 
 **Sam Burford**
+- Portfolio: https://www.sam-burford.com
 - Phone: 07572410598
 - Email: samburford@protonmail.com
 - LinkedIn: [Sam Burford on LinkedIn](https://www.linkedin.com/in/sam-burford)
